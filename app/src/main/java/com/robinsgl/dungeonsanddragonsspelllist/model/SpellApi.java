@@ -1,15 +1,16 @@
 package com.robinsgl.dungeonsanddragonsspelllist.model;
 
-public class SpellUrl {
+public class SpellApi {
     private String spellName;
     private String spellUrl;
+    private String baseUrl = "https://www.dnd5eapi.co";
 
-    public SpellUrl() {
+    public SpellApi() {
 
     }
-    public SpellUrl(String spellName, String spellUrl) {
+    public SpellApi(String spellName, String spellUrl) {
         this.spellName = spellName;
-        this.spellUrl = spellUrl;
+        this.spellUrl = baseUrl + spellUrl;
     }
 
     public String getSpellName() {
@@ -25,6 +26,7 @@ public class SpellUrl {
     }
 
     public void setSpellUrl(String spellUrl) {
-        this.spellUrl = spellUrl;
+        this.spellUrl = baseUrl + spellUrl;
     }
+
 }

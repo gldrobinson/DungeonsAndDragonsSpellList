@@ -2,7 +2,7 @@ package com.robinsgl.dungeonsanddragonsspelllist.model;
 
 public class FullSpellDetail {
     private String name;
-    private String level;
+    private int level;
     private String castingTime;
     private String range;
     private String duration;
@@ -27,11 +27,11 @@ public class FullSpellDetail {
         this.name = name;
     }
 
-    public String getLevel() {
+    public int getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(int level) {
         this.level = level;
     }
 

@@ -6,8 +6,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.robinsgl.dungeonsanddragonsspelllist.R;
@@ -16,8 +14,9 @@ import com.robinsgl.dungeonsanddragonsspelllist.model.SpellApi;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellHolder>  {
+public class SpellListAdapter extends RecyclerView.Adapter<SpellListAdapter.SpellHolder>  {
     private List<SpellApi> spells = new ArrayList<>();
+    private OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -50,7 +49,24 @@ public class SpellAdapter extends RecyclerView.Adapter<SpellAdapter.SpellHolder>
         public SpellHolder(@NonNull View itemView) {
             super(itemView);
             spellTextView = itemView.findViewById(R.id.spell_text_view);
+
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                if (listener != null && position != RecyclerView.NO_POSITION) {
+                    listener.onSpellClick(spells.get(position));
+                }
+
+            });
         }
+
+    }
+
+    public interface OnItemClickListener  {
+        void onSpellClick(SpellApi spellApi);
+    }
+
+    public void setOnItemClickListener  (OnItemClickListener listener) {
+         this.listener = listener;
     }
 
 }

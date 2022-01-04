@@ -70,7 +70,7 @@ public class SpellDetailActivity extends AppCompatActivity {
             } else {
                 materialTextView.setText("");
             }
-            
+
         });
 
     }

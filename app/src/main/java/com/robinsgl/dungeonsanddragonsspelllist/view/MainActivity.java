@@ -6,14 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.TextView;
 
 import com.robinsgl.dungeonsanddragonsspelllist.R;
 import com.robinsgl.dungeonsanddragonsspelllist.adapter.SpellListAdapter;
-import com.robinsgl.dungeonsanddragonsspelllist.model.SpellApi;
 import com.robinsgl.dungeonsanddragonsspelllist.viewModel.SpellListViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,11 +16,15 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     SpellListAdapter spellListAdapter;
     SpellListViewModel spellListViewModel;
+    androidx.appcompat.widget.Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

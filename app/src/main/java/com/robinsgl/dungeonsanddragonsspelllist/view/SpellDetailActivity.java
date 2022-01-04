@@ -8,18 +8,17 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.robinsgl.dungeonsanddragonsspelllist.R;
 import com.robinsgl.dungeonsanddragonsspelllist.adapter.SpellContentAdapter;
-import com.robinsgl.dungeonsanddragonsspelllist.model.SpellContent;
+import com.robinsgl.dungeonsanddragonsspelllist.viewModel.SpellDetailViewModel;
 
-import java.util.ArrayList;
 
 public class SpellDetailActivity extends AppCompatActivity {
 
     TextView spellNameTextView;
     View divisorView;
     GridView gridView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,19 +35,21 @@ public class SpellDetailActivity extends AppCompatActivity {
 
         spellNameTextView.setText(spellNameReceived);
 
-        Log.i("spellData", "onCreate: " + spellNameReceived + " " + spellUrlReceived);
+        SpellDetailViewModel spellDetailViewModel = new SpellDetailViewModel();
 
-        ArrayList<SpellContent> spellContents = new ArrayList<>();
-        spellContents.add(new SpellContent("LEVEL", "3rd"));
-        spellContents.add(new SpellContent("RANGE/AREA", "150ft"));
-        spellContents.add(new SpellContent("DURATION", "Instantaneous"));
-        spellContents.add(new SpellContent("ATTACK SAVE", "Dex Save"));
-        spellContents.add(new SpellContent("CASTING TIME", "1 Action"));
-        spellContents.add(new SpellContent("COMPONENTS", "V,S,M"));
-        spellContents.add(new SpellContent("DAMAGE/EFFECT", "Fire"));
+        spellDetailViewModel.getSpellDetail(spellUrlReceived);
 
-        SpellContentAdapter spellContentAdapter = new SpellContentAdapter(this, R.layout.spell_detail_item, spellContents);
-        gridView.setAdapter(spellContentAdapter);
+        spellDetailViewModel.spellContentsList.observe(this, spellContents -> {
+            for (int i = 0; i < spellContents.size(); i++) {
+                Log.i(spellContents.get(i).getTitle(), "onChanged: " + spellContents.get(i).getContent());
+            }
+            SpellContentAdapter spellContentAdapter = new SpellContentAdapter(getApplicationContext(), R.layout.spell_detail_item, spellContents);
+            gridView.setAdapter(spellContentAdapter);
+        });
+
+        spellDetailViewModel.fullSpellDetail.observe(this, fullSpellDetail -> {
+
+                });
 
     }
 }

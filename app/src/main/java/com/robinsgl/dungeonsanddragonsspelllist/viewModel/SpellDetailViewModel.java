@@ -37,7 +37,15 @@ public class SpellDetailViewModel extends ViewModel {
                 if (fullSpellObject.has("desc")) {
                     try {
                         JSONArray jsonArray = fullSpellObject.getJSONArray("desc");
-                        spellReceived.setDescription(jsonArray.getString(0));
+                        String description = "";
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            if (i == jsonArray.length() - 1) {
+                                description += jsonArray.getString(i);
+                            } else {
+                                description += jsonArray.getString(i) + "\n\n";
+                            }
+                        }
+                        spellReceived.setDescription(description);
                     } catch (Exception e) {
                         Log.d("Failed: ", "to received desc.");
 
@@ -105,17 +113,31 @@ public class SpellDetailViewModel extends ViewModel {
                     spellContents.add(spellContent);
                 }
 
+                if (fullSpellObject.has("material")) {
+                    try {
+                        String material = fullSpellObject.getString("material");
+                        spellReceived.setMaterial(material);
+                    } catch (Exception e) {
+                        spellReceived.setMaterial(null);
+                        Log.d("Failed: ", "to received material.");
+
+                    }
+                }
+
                 if (fullSpellObject.has("components")) {
                     try {
                         JSONArray jsonArray = fullSpellObject.getJSONArray("components");
                         String components = "";
                         for (int i=0; i < jsonArray.length(); i++) {
                             if (i == jsonArray.length() -1) {
-                                components += jsonArray.getString(i) + " *";
+                                components += jsonArray.getString(i);
                             } else {
                                 components += jsonArray.getString(i) + ", ";
                             }
 
+                        }
+                        if(spellReceived.getMaterial() != null) {
+                            components += " *";
                         }
                         spellReceived.setComponents(components);
                         SpellContent spellContent = new SpellContent("COMPONENTS", components);
@@ -202,17 +224,6 @@ public class SpellDetailViewModel extends ViewModel {
                     spellContents.add(spellContent);
                 }
 
-
-                if (fullSpellObject.has("material")) {
-                    try {
-                        String material = fullSpellObject.getString("material");
-                        spellReceived.setMaterial(material);
-                    } catch (Exception e) {
-                        spellReceived.setMaterial(null);
-                        Log.d("Failed: ", "to received material.");
-
-                    }
-                }
 
                 if (fullSpellObject.has("ritual")) {
                     try {

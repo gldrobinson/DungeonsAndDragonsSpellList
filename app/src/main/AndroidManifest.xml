@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DungeonsAndDragonsSpellList">
+        <activity android:name=".view.SpellDetailActivity"></activity>
         <activity
             android:name=".view.MainActivity"
             android:exported="true">

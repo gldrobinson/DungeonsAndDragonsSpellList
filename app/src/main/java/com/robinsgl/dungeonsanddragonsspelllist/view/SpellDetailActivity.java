@@ -49,9 +49,6 @@ public class SpellDetailActivity extends AppCompatActivity {
         spellDetailViewModel.getSpellDetail(spellUrlReceived);
 
         spellDetailViewModel.spellContentsList.observe(this, spellContents -> {
-            for (int i = 0; i < spellContents.size(); i++) {
-                Log.i(spellContents.get(i).getTitle(), "onChanged: " + spellContents.get(i).getContent());
-            }
             SpellContentAdapter spellContentAdapter = new SpellContentAdapter(getApplicationContext(), R.layout.spell_detail_item, spellContents);
             gridView.setAdapter(spellContentAdapter);
         });
@@ -63,7 +60,13 @@ public class SpellDetailActivity extends AppCompatActivity {
             String materials = fullSpellDetail.getMaterial();
 
             spellDescriptionTextView.setText(spellDescription);
-            spellHigherLevelTextView.setText(higherLevelString + higherLevel);
+
+            if (higherLevel != null) {
+                spellHigherLevelTextView.setText(higherLevelString + higherLevel);
+            } else {
+                spellHigherLevelTextView.setText("");
+            }
+
 
             if (materials != null) {
                 materialTextView.setText("* " +materials);

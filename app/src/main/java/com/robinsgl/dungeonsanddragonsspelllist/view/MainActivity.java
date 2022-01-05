@@ -1,11 +1,19 @@
 package com.robinsgl.dungeonsanddragonsspelllist.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 
 import com.robinsgl.dungeonsanddragonsspelllist.R;
 import com.robinsgl.dungeonsanddragonsspelllist.adapter.SpellListAdapter;
@@ -17,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     SpellListAdapter spellListAdapter;
     SpellListViewModel spellListViewModel;
     androidx.appcompat.widget.Toolbar toolbar;
+    MenuInflater menuInflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +57,29 @@ public class MainActivity extends AppCompatActivity {
            intent.putExtra("spellUrl", spellUrl);
            startActivity(intent);
        });
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_search, menu);
+        MenuItem searchItem = menu.findItem(R.id.menu_search_view);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                spellListAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        return true;
     }
 }

@@ -8,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:backgroundTint="@color/background_grey"
         android:layout_margin="10dp" >
 
         <TextView
@@ -16,9 +17,20 @@
             android:layout_height="wrap_content"
             android:text="Example 1"
             android:textSize="24dp"
-            android:textStyle="bold"
+            android:textColor="@color/header_blue"
+            android:backgroundTint="@color/header_blue"
             android:layout_alignParentTop="true"
             />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="2dp"
+            android:layout_below="@+id/spell_text_view"
+            android:background="@color/divisor_grey" />
+
 
     </RelativeLayout>
 
